@@ -12,6 +12,7 @@ const LIMIT_FILE_SIZE = 20000000
 
 router.post('/', upload.single('photo'), async (req, res, next) => {
   var photo = ''
+  console.log(req.body)
   console.log(req.file)
   if (req.file == undefined) {
     res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.NO_FILE))
@@ -33,5 +34,4 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
   res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_UPLOAD_FILE))
 })
 
-module.exports = router;
-
+module.exports = router

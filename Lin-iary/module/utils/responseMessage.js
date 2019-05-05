@@ -5,4 +5,14 @@ module.exports = {
     UN_VALID_FILE: "유효 하지 않는 파일 입니다.",
     NO_FILE: "파일이 없습니다",
     OVER_SIZE_FILE: "파일이 너무 큽니다",
-};
+
+
+    SUCCESS_SIGN_UP: "회원가입에 성공했습니다",
+    FAIL_SIGN_UP: "회원가입에 실패했습니다",
+    FAIL_ALREADY_EXIST: "이미 존재하는 ID입니다",
+
+    FAIL_ENCRYPTION: "암호화에 실패했습니다.",
+
+    FAIL_CSV_READ: "csv 읽기 실패",
+    FAIL_CSV_WRITE: "csv 쓰기 실패"
+}
