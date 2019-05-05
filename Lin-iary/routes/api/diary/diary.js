@@ -23,7 +23,6 @@ const imageAddress = 'http://13.124.195.67:3000/images/'
 router.get('/', (req, res) => {
     csvManager.csvRead(csvManager.CSV_DIARY).then(async (jsonArr) => {
         const jsonArrWithConsult = await joinConsult(jsonArr)
-        console.log("2" + jsonArrWithConsult)
         res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonArrWithConsult))
     }).catch((err) => {
         console.log(err.toString())
@@ -69,8 +68,6 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
     }
 
     const filePath = req.file.filename
-    console.log(req.file.path)
-    console.log(`${imageAddress}${filePath}`)
     const jsonData = {
         content: content,
         url: `${imageAddress}${filePath}`,
