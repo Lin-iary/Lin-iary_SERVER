@@ -1,4 +1,3 @@
-"nickname","age","gender","personality","familly","id","pwd","salt"
-"리니","1","0","첫 일기장입니다","[{""name"":""아버지"",""age"":48},{""name"":""아머니"",""age"":48}]","test","+hNAZCBh7Q8G+Lg7pIjgHawknx8Iy2ZNXNKvsYaXbo52fHxSP2FPedgOnQ4Ti1JZ9kMGuSicg7DC7nXdEb0NRQ==","5Kerg/CQMiQecGTskRQKMuSoa074bIND0FWbKByPUeQ="
-"리니","1","2","첫 일기장입니다","[{""name"":""아버지"",""age"":48},{""name"":""아머니"",""age"":48}]","test1","hFu/UmOK+UHtmDdh+ZZVDzb/QnJRlMR5LG3//F01+KhbUY/yr7y5mCL3UGm/uH10rPF5w+a1N9zqGLk7j7QCGA==","+wMMbdyPkGUmD1QLvuCGQkL+lf21Z61jEkp9A3lRNL8="
-"리니",1,2,"첫 일기장입니다","[{""name"":""아버지"",""age"":48},{""name"":""아머니"",""age"":48}]","test2","hRQDYFgUqvNi0zlYVUNqjEs/DtQk2hcvOXr5LEtzKlPRqcOs6EgawVoam971s2HwirThtJ+TACH+rWSCTD4VoA==","Z8yENe8O1BTC1q56YaahpmJpNEHrFoSrBAQ4jyDtgnE="
+"nickname","age","gender","personality","familly","id","pwd","salt","idx"
+"리니","1","2","첫 일기장입니다","[{""name"":""아버지"",""age"":48},{""name"":""아머니"",""age"":48}]","tesddsfsssssssssssdfdtdd2","5/xcYLjOoRhTcFVT5zB7GOgbAEkh2/7n672CALWALLwFs+xjY3phH+tSDzl3l38jaORTr+ig3V/kU0FyqvCAMQ==","KJgjA3BndI6P13jCuKSW/weWUYb7ErV+UW7IDlw+b5o=","1"
+"리니",1,2,"첫 일기장입니다","[{""name"":""아버지"",""age"":48},{""name"":""아머니"",""age"":48}]","tesddsfssssssssdfssssdfdtdd2","lrg2FpWqvL+k8zW5gsXh1DwDzUbDpaOwAd0ClBZG8AFQPgY3yJBpBNNlRU6+x14YqtjFvr+I+YI9NC3pTNFz/Q==","BhtNhnuF+Wxv8/E438UVUzl+shI4OvJqot09WjnR5nQ=",2
