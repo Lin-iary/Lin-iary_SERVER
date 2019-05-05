@@ -33,9 +33,9 @@ router.get('/', (req, res) => {
 /* get diary single */
 router.get('/:id', (req, res) => {
     const diary_idx = req.params.id
-    csvManager.csvReadSingle(csvManager.CSV_DIARY, diary_idx).then((jsonData) => {
-        jsonData = joinConsult([jsonData])[0]
-        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonData))
+    csvManager.csvReadSingle(csvManager.CSV_DIARY, diary_idx).then( async (jsonData) => {
+        const jsonDataWithConsult = (await joinConsult([jsonData]))[0]
+        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonDataWithConsult))
     }).catch((err) => {
         console.log(err.toString())
         res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, MSG.FAIL_CSV_READ))
@@ -72,7 +72,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         content: content,
         url: `${imageAddress}${filePath}`,
         consult_idx: null,
-        write_date: new Date()
+        write_date: new Date().split("T")[0]
     }
 
     csvManager.csvAdd(csvManager.CSV_DIARY, jsonData).then((isSuccess) => {
