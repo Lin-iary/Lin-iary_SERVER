@@ -76,7 +76,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         content: content,
         url: `${imageAddress}${filePath}`,
         consult_idx: null,
-        write_date: new Date().split("T")[0]
+        write_date: (new Date()).split("T")[0]
     }
     
     console.log(`~jsonData is ${JSON.stringify(jsonData)}`)
