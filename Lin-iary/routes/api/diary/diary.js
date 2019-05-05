@@ -76,7 +76,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         content: content,
         url: `${imageAddress}${filePath}`,
         consult_idx: null,
-        write_date: (new Date()).split("T")[0]
+        write_date: new Date()
     }
     
     console.log(`~jsonData is ${JSON.stringify(jsonData)}`)
@@ -109,6 +109,7 @@ async function joinConsult(jsonArr) {
         counselorMap[counselorArr[i].idx] = counselorArr[i]
     }
     for (const i in jsonArr) {
+        jsonArr[i].write_date = jsonArr[i].write_date.split("T")[0]
         const consult_idx = jsonArr[i].consult_idx
         if (consult_idx == undefined) {
             jsonArr[i].state = 0

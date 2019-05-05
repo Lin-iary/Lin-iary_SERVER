@@ -69,7 +69,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         name: name,
         organization: organization,
         url: `${imageAddress}${filePath}`,
-        write_date: (new Date()).split("T")[0]
+        write_date: new Date()
     }
 
     csvManager.csvAdd(csvManager.CSV_COUNSELOR, jsonData).then((isSuccess) => {

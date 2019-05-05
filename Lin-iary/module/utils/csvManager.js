@@ -42,8 +42,11 @@ const csvManager = {
                     reject(resMessage.FAIL_CSV_READ)
                     return
                 }
+                for(const idx in jsonArr){
+                    if(!jsonArr[idx].write_date) continue
+                    jsonArr[idx].write_date = jsonArr[idx].write_date
+                }
                 console.log(`All of complete(${csv_url}${fileName})!`)
-                resolve(jsonArr);
             }, (err) => {
                 console.log(`err with readCSV: ${err}`)
                 reject(resMessage.FAIL_CSV_READ)
@@ -70,7 +73,6 @@ const csvManager = {
     },
     csvAdd: async (fileName, jsonData) => {
         const jsonArr = await csvManager.csvRead(fileName)
-        console.log(jsonArr)
         let prevIdx = 0
         if (jsonArr.length > 0)
             prevIdx = parseInt(jsonArr[jsonArr.length - 1].idx)
