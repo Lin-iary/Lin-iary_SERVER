@@ -12,6 +12,8 @@ const CODE = require('../../../module/utils/statusCode')
 const MSG = require('../../../module/utils/responseMessage')
 const util = require('../../../module/utils/utils')
 
+const csvManager = require('../../../module/utils/csvManager')
+
 const LIMIT_FILE_SIZE = 20000000
 
 const imageAddress = 'http://13.124.195.67:3000/images/'
@@ -38,11 +40,22 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
     const filePath = req.file.filename
     console.log(req.file.path)
     console.log(`${imageAddress}${filePath}`)
-    const diaryJSON = {
+    const jsonData = {
         content: content,
         url : `${imageAddress}${filePath}`
     }
-    res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_UPLOAD_FILE, diaryJSON))
+    
+    csvManager.csvAdd(csvManager.CSV_DIARY, jsonData).then((isSuccess) => {
+        if(isSuccess != true){
+            console.log(err.toString())
+            res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, MSG.FAIL_CSV_WRITE))
+            return
+        }
+        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_UPLOAD_FILE, jsonData))
+    }).catch((err) => {
+        console.log(err.toString())
+        res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, err.toString()))
+    })
 })
 
 module.exports = router

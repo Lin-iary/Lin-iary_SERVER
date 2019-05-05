@@ -50,8 +50,13 @@ async function signUp(jsonData){
 	}
 	jsonData.salt = await encryptionManager.makeRandomByte()
 	jsonData.pwd = await encryptionManager.encryption(jsonData.pwd, jsonData.salt)
+	let prevIdx = 0
+	if (jsonArr.length > 0)
+		prevIdx = parseInt(jsonArr[jsonArr.length - 1].idx)
+	console.log(`prevId : ${prevIdx}`)
+	jsonData.idx = parseInt(prevIdx + 1)
 	jsonArr.push(jsonData)
-	const isSuccess = csvManager.csvWrite(csvManager.CSV_USER, jsonArr)	
+	const isSuccess = await csvManager.csvWrite(csvManager.CSV_USER, jsonArr)	
 	return isSuccess
 }
 

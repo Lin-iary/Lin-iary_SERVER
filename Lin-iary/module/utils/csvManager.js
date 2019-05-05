@@ -7,7 +7,6 @@ const csv_url = './public/csv/'
 const csvManager = {
     csvWrite: (fileName, jsonArray) => {
         return new Promise((resolve, reject) => {
-            
             console.log(JSON.stringify(jsonArray))
             const resultCsv = json2csv.parse(jsonArray)
             console.log(resultCsv)
@@ -25,9 +24,11 @@ const csvManager = {
     },
     csvRead: (fileName) => {
         return new Promise((resolve, reject) => {
-            try{
-                fs.existsSync(`${csv_url}${fileName}`)
-            }catch(err){
+            try {
+                if(fs.existsSync(`${csv_url}${fileName}`) == false){
+                    throw Error(MSG.FAIL_CSV_READ)
+                }
+            } catch (err) {
                 console.log(`file(${csv_url}${fileName}) not exist`)
                 resolve(Array())
                 return
@@ -46,8 +47,19 @@ const csvManager = {
             })
         })
     },
+    csvAdd: async (fileName, jsonData) => {
+        const jsonArr = await csvManager.csvRead(fileName)
+        console.log(jsonArr)
+        let prevIdx = 0
+        if (jsonArr.length > 0)
+            prevIdx = parseInt(jsonArr[jsonArr.length - 1].idx)
+        console.log(`prevId : ${prevIdx}`)
+        jsonData.idx = parseInt(prevIdx + 1)
+        jsonArr.push(jsonData)
+        return csvManager.csvWrite(fileName, jsonArr)
+    },
     CSV_USER: "user.csv",
-    CSV_USER: "diary.csv",
+    CSV_DIARY: "diary.csv",
 }
 
 module.exports = csvManager
