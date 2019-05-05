@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// about auth
+router.use('/api/auth', require('./api/auth/index'))
 
-module.exports = router;
+// diary
+router.use('/api/diary', require('./api/diary/index'))
+// consult
+router.use('/api/consult', require('./api/consult/index'))
+// counselor
+router.use('/api/counselor', require('./api/counselor/index'))
+
+router.use('/images', express.static('public/images'))
+router.use('/images', express.static('public/info'))
+
+module.exports = router
