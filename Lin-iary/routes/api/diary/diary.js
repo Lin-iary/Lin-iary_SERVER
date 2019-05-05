@@ -14,7 +14,7 @@ const util = require('../../../module/utils/utils')
 
 const LIMIT_FILE_SIZE = 20000000
 
-const imageAddress = 'http://localhost:3000/images/'
+const imageAddress = 'http://13.124.195.67:3000/images/'
 
 router.post('/', upload.single('photo'), async (req, res, next) => {
     const body = req.body
