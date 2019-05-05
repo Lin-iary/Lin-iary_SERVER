@@ -12,5 +12,6 @@ router.use('/api/consult', require('./api/consult/index'))
 router.use('/api/counselor', require('./api/counselor/index'))
 
 router.use('/image', express.static('public/images'))
+router.use('/image', express.static('public/info'))
 
 module.exports = router
