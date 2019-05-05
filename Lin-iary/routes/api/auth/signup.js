@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
 
-const async = require('async')
-
 const CODE = require('../../../module/utils/statusCode')
 const MSG = require('../../../module/utils/responseMessage')
 const util = require('../../../module/utils/utils')

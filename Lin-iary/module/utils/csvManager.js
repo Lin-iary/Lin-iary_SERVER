@@ -33,11 +33,16 @@ const csvManager = {
                 resolve(Array())
                 return
             }
+            
             csv().fromFile(`${csv_url}${fileName}`).then((jsonArr) => {
                 if (!jsonArr) {
                     console.log(`file read(${csv_url}${fileName}) err: ${err}`)
                     reject(resMessage.FAIL_CSV_READ)
                     return
+                }
+                for(const idx in jsonArr){
+                    if(!jsonArr[idx].write_date) continue
+                    jsonArr[idx].write_date = jsonArr[idx].write_date.split("T")[0]
                 }
                 console.log(`All of complete(${csv_url}${fileName})!`)
                 resolve(jsonArr);
@@ -78,6 +83,8 @@ const csvManager = {
     },
     CSV_USER: "user.csv",
     CSV_DIARY: "diary.csv",
+    CSV_CONSULT: "consult.csv",
+    CSV_COUNSELOR: "counselor.csv",
 }
 
 module.exports = csvManager

@@ -21,9 +21,10 @@ const imageAddress = 'http://13.124.195.67:3000/images/'
 
 /* get diary list */
 router.get('/', (req, res) => {
-    csvManager.csvRead(csvManager.CSV_DIARY).then((jsonArr) => {
-        console.log(jsonArr)
-        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonArr))
+    csvManager.csvRead(csvManager.CSV_DIARY).then(async (jsonArr) => {
+        const jsonArrWithConsult = await joinConsult(jsonArr)
+        console.log("2"+jsonArrWithConsult)
+        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonArrWithConsult))
     }).catch((err) => {
         res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, MSG.FAIL_CSV_READ))
     })
@@ -33,6 +34,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     const diary_idx = req.params.id
     csvManager.csvReadSingle(csvManager.CSV_DIARY, diary_idx).then((jsonData) => {
+        jsonData = joinConsult([jsonData])[0]
         res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonData))
     }).catch((err) => {
         res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, MSG.FAIL_CSV_READ))
@@ -47,10 +49,10 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         return
     }
 
-    if (req.file.mimetype != 'image/jpeg') {
-        res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.UN_VALID_FILE))
-        return
-    }
+    // if (req.file.mimetype != 'image/jpeg') {
+    //     res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.UN_VALID_FILE))
+    //     return
+    // }
 
     if (req.file.size > LIMIT_FILE_SIZE) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.OVER_SIZE_FILE))
@@ -58,12 +60,19 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
     }
 
     const content = body.content
+    
+    if(content == undefined){
+        res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.WRONG_PARAMETER))
+        return
+    }
+
     const filePath = req.file.filename
     console.log(req.file.path)
     console.log(`${imageAddress}${filePath}`)
     const jsonData = {
         content: content,
         url: `${imageAddress}${filePath}`,
+        consult_idx: null,
         write_date: new Date()
     }
 
@@ -79,5 +88,29 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, err.toString()))
     })
 })
+
+async function joinConsult(jsonArr){
+    const consultArr = await csvManager.csvRead(csvManager.CSV_CONSULT)
+    const map = {}
+    for(const i in consultArr){
+        map[consultArr[i].idx] = consultArr[i]
+    }
+    for(const i in jsonArr){
+        const consult_idx = jsonArr[i].consult_idx
+        console.log(JSON.stringify(jsonArr[i]))
+        if(consult_idx == undefined){
+            jsonArr[i].state = 0
+            jsonArr[i].counselor_name = null
+            jsonArr[i].counselor_organization = null
+            continue
+        }
+        jsonArr[i].state = 1
+        jsonArr[i].counselor_name = map[counselor_idx].name
+        jsonArr[i].counselor_organization = map[counselor_idx].organization
+    }
+    return jsonArr
+}
+
+
 
 module.exports = router
