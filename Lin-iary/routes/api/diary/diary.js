@@ -45,7 +45,7 @@ router.get('/:id', (req, res) => {
 router.post('/', upload.single('photo'), async (req, res, next) => {
     console.log(`~post`)
     const body = req.body
-    console.log(`file : ${req.file} , body : ${JSON.stringify(body)}`)
+    console.log(`file : ${req.file.originalname} , body : ${JSON.stringify(body)}`)
     if (req.file == undefined) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.NO_FILE))
         console.log(`~req fie is undefined`)
