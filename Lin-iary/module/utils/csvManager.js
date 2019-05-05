@@ -19,7 +19,7 @@ const csvManager = {
                     reject(resMessage.FAIL_CSV_WRITE)
                     return
                 }
-                console.log(`All of complete(${csv_url}${fileName})!`)
+                console.log(`All of complete(${csv_url}${fileName})`)
                 resolve(true)
             })
         })

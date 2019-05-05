@@ -91,7 +91,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
             return
         }
         console.log(`~csvAdd success`)
-        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_UPLOAD_FILE, jsonData))
+        res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_UPLOAD_FILE))
     }).catch((err) => {
         console.log(err.toString())
         console.log(`~csvAdd fail with err(${err})`)
