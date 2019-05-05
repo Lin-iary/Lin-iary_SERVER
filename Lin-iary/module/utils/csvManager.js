@@ -47,6 +47,24 @@ const csvManager = {
             })
         })
     },
+    csvReadSingle: (fileName, idx) => {
+        return new Promise(async (resolve, reject) => {
+            const jsonArr = await csvManager.csvRead(fileName)
+
+            let jsonData = null
+            for (const i in jsonArr) {
+                if (jsonArr[i].idx == idx) {
+                    jsonData = jsonArr[i]
+                    break
+                }
+            }
+            if(jsonData == null){
+                reject(MSG.NO_INDEX)
+                return
+            }
+            resolve(jsonData)
+        })
+    },
     csvAdd: async (fileName, jsonData) => {
         const jsonArr = await csvManager.csvRead(fileName)
         console.log(jsonArr)
