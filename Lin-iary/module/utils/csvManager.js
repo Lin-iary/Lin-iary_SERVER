@@ -42,10 +42,6 @@ const csvManager = {
                     reject(resMessage.FAIL_CSV_READ)
                     return
                 }
-                for(const idx in jsonArr){
-                    if(!jsonArr[idx].write_date) continue
-                    jsonArr[idx].write_date = jsonArr[idx].write_date.split("T")[0]
-                }
                 console.log(`All of complete(${csv_url}${fileName})!`)
                 resolve(jsonArr);
             }, (err) => {

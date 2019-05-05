@@ -13,7 +13,7 @@ const upload = multer({
 const csvManager = require('../../../module/utils/csvManager')
 
 const LIMIT_FILE_SIZE = 20000000
-const imageAddress = 'http://13.124.195.67:3000/info'
+const imageAddress = 'http://13.124.195.67:3000/images/'
 
 
 /* get diary list */
@@ -69,7 +69,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         name: name,
         organization: organization,
         url: `${imageAddress}${filePath}`,
-        date: new Date()
+        write_date: new Date().split("T")[0]
     }
 
     csvManager.csvAdd(csvManager.CSV_COUNSELOR, jsonData).then((isSuccess) => {
