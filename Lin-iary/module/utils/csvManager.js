@@ -47,6 +47,7 @@ const csvManager = {
                     jsonArr[idx].write_date = jsonArr[idx].write_date
                 }
                 console.log(`All of complete(${csv_url}${fileName})!`)
+                resolve(jsonArr)
             }, (err) => {
                 console.log(`err with readCSV: ${err}`)
                 reject(resMessage.FAIL_CSV_READ)

@@ -33,8 +33,10 @@ router.get('/', (req, res) => {
 /* get diary single */
 router.get('/:id', (req, res) => {
     const diary_idx = req.params.id
+    console.log(diary_idx)
     csvManager.csvReadSingle(csvManager.CSV_DIARY, diary_idx).then( async (jsonData) => {
         const jsonDataWithConsult = (await joinConsult([jsonData]))[0]
+        console.log(jsonDataWithConsult)
         res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_GET_DIARY_LIST, jsonDataWithConsult))
     }).catch((err) => {
         console.log(err.toString())
@@ -45,7 +47,7 @@ router.get('/:id', (req, res) => {
 router.post('/', upload.single('photo'), async (req, res, next) => {
     console.log(`~post`)
     const body = req.body
-    console.log(`file : ${req.file.originalname} , body : ${JSON.stringify(body)}`)
+    console.log(`file : ${req.file} , body : ${JSON.stringify(body)}`)
     if (req.file == undefined) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.NO_FILE))
         console.log(`~req fie is undefined`)
@@ -67,7 +69,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
 
     if (content == undefined) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.WRONG_PARAMETER))
-        console.log(`~CONTNET is undefined`)
+        console.log(`~CONTENT is undefined`)
         return
     }
 
@@ -98,6 +100,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
 })
 
 async function joinConsult(jsonArr) {
+    console.log(`start joinConsult`)
     const consultArr = await csvManager.csvRead(csvManager.CSV_CONSULT)
     const consultMap = {}
     for (const i in consultArr) {
@@ -141,6 +144,7 @@ async function joinConsult(jsonArr) {
         jsonArr[i].counselor_name = counselor.name
         jsonArr[i].counselor_organization = counselor.organization
     }
+    console.log(`end joinConsult`)
     return jsonArr
 }
 
