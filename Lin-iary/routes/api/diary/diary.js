@@ -43,10 +43,12 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', upload.single('photo'), async (req, res, next) => {
+    console.log(`~post`)
     const body = req.body
     console.log(`file : ${req.file} , body : ${JSON.stringify(body)}`)
     if (req.file == undefined) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.NO_FILE))
+        console.log(`~req fie is undefined`)
         return
     }
 
@@ -57,6 +59,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
 
     if (req.file.size > LIMIT_FILE_SIZE) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.OVER_SIZE_FILE))
+        console.log(`~file is too big`)
         return
     }
 
@@ -64,6 +67,7 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
 
     if (content == undefined) {
         res.status(CODE.OK).send(util.successFalse(CODE.BAD_REQUEST, MSG.WRONG_PARAMETER))
+        console.log(`~CONTNET is undefined`)
         return
     }
 
@@ -74,16 +78,21 @@ router.post('/', upload.single('photo'), async (req, res, next) => {
         consult_idx: null,
         write_date: new Date().split("T")[0]
     }
+    
+    console.log(`~jsonData is ${JSON.stringify(jsonData)}`)
 
     csvManager.csvAdd(csvManager.CSV_DIARY, jsonData).then((isSuccess) => {
         if (isSuccess != true) {
             console.log(err.toString())
+            console.log(`~csvAdd fail with isSuccess = false`)
             res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, MSG.FAIL_CSV_WRITE))
             return
         }
+        console.log(`~csvAdd success`)
         res.status(CODE.OK).send(util.successTrue(CODE.OK, MSG.SUCCESS_UPLOAD_FILE, jsonData))
     }).catch((err) => {
         console.log(err.toString())
+        console.log(`~csvAdd fail with err(${err})`)
         res.status(CODE.OK).send(util.successFalse(CODE.INTERNAL_SERVER_ERROR, err.toString()))
     })
 })
